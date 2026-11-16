@@ -1,0 +1,93 @@
+<!doctype html>
+<html lang="id">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#14231b"><meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="BDG100">
+<link rel="manifest" href="manifest.webmanifest"><link rel="apple-touch-icon" href="icons/icon-192.png">
+<title>BDG100 Training</title>
+<style>
+:root{--bg:#101912;--panel:#1b2a20;--panel2:#23372a;--text:#f2f5ef;--muted:#aab9ad;--lime:#b8d99a;--gold:#edc477;--line:#34483a;--red:#ff9c91}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--text);font:16px system-ui,-apple-system,sans-serif;padding-bottom:88px}
+header{padding:24px 18px 16px;background:linear-gradient(140deg,#1c3827,#101912);border-bottom:1px solid var(--line)}
+.kicker{font-size:12px;letter-spacing:2px;color:var(--lime);font-weight:800}h1{font-size:30px;margin:5px 0 2px}header p{color:var(--muted);margin:0}
+main{max-width:760px;margin:auto;padding:16px}.view{display:none}.view.active{display:block}
+.grid{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:10px}.card{background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:15px;margin:10px 0}
+.stat small,.muted{color:var(--muted)}.stat strong{display:block;font-size:25px;margin-top:4px}.section-title{font-size:18px;margin:22px 0 8px}
+label{display:block;font-size:13px;color:var(--muted);margin:12px 0 5px}input,select,textarea{width:100%;padding:12px;border-radius:12px;border:1px solid var(--line);background:#111d15;color:var(--text);font:inherit}
+textarea{min-height:80px;resize:vertical}button{border:0;border-radius:12px;padding:12px 15px;background:var(--lime);color:#172318;font-weight:800;font-size:15px}
+button.secondary{background:var(--panel2);color:var(--text);border:1px solid var(--line)}button.danger{background:#482c2a;color:#ffe5df}
+.row{display:flex;gap:9px;align-items:center}.row>*{flex:1}.tabs{position:fixed;bottom:0;left:0;right:0;display:flex;justify-content:center;background:#142019f2;border-top:1px solid var(--line);padding:8px max(8px,env(safe-area-inset-right)) calc(8px + env(safe-area-inset-bottom));backdrop-filter:blur(12px);z-index:5}
+.tabs button{flex:1;max-width:190px;background:transparent;color:var(--muted);padding:10px 4px;font-size:12px}.tabs button.active{color:var(--lime);background:var(--panel2)}
+.entry{padding:12px 0;border-bottom:1px solid var(--line)}.entry:last-child{border:0}.entry strong{display:block}.tag{display:inline-block;border:1px solid var(--line);border-radius:20px;padding:3px 8px;color:var(--lime);font-size:12px}
+.note{font-size:13px;color:var(--muted);line-height:1.5}.empty{color:var(--muted);text-align:center;padding:24px 8px}
+.progress{height:9px;background:#304136;border-radius:10px;overflow:hidden;margin-top:8px}.progress span{display:block;height:100%;background:var(--lime);width:0}
+@media(min-width:600px){main{padding:22px}.grid{grid-template-columns:repeat(4,minmax(0,1fr))}}
+</style>
+</head>
+<body>
+<header><div class="kicker">TRAIL RUNNING • 2027</div><h1>BDG100 Training</h1><p>Persiapan 42K, satu langkah setiap kali.</p></header>
+<main>
+<section id="home" class="view active">
+ <div class="card"><span class="tag">TARGET 42K</span><h2 style="margin:12px 0 5px">Bangun konsistensi dengan aman.</h2><p class="muted" style="margin:0">Catat latihanmu, perhatikan pemulihan, dan evaluasi progres tanpa terburu-buru.</p></div>
+ <div class="grid">
+  <div class="card stat"><small>Total sesi</small><strong id="s-sessions">0</strong></div>
+  <div class="card stat"><small>Total jarak</small><strong id="s-km">0 km</strong></div>
+  <div class="card stat"><small>Total D+</small><strong id="s-elev">0 m</strong></div>
+  <div class="card stat"><small>Rata-rata tidur</small><strong id="s-sleep">—</strong></div>
+ </div>
+ <h3 class="section-title">Fokus latihan</h3>
+ <div class="card"><strong>1. Konsistensi</strong><p class="note">Bangun rutinitas yang bisa dipertahankan, dengan intensitas yang terasa nyaman.</p></div>
+ <div class="card"><strong>2. Kekuatan dan teknik</strong><p class="note">Latih keseimbangan, kekuatan dasar, serta teknik berjalan dan berlari di medan yang aman.</p></div>
+ <div class="card"><strong>3. Pemulihan</strong><p class="note">Tidur cukup, makan teratur, hidrasi, dan hari istirahat sama pentingnya dengan latihan.</p></div>
+ <p class="note">Program spesifik belum ditetapkan karena data kondisi latihan terkinimu belum tersedia. Hindari menambah jarak atau intensitas secara mendadak. Libatkan orang tua/wali dan pelatih yang kompeten.</p>
+</section>
+<section id="log" class="view">
+ <h2>Catat latihan</h2>
+ <form id="runform">
+  <label>Tanggal</label><input id="date" type="date" required>
+  <label>Jenis aktivitas</label><select id="kind"><option>Easy run</option><option>Long run</option><option>Trail run</option><option>Hiking</option><option>Strength</option><option>Rest day</option><option>Other</option></select>
+  <div class="row"><div><label>Jarak (km)</label><input id="km" type="number" min="0" max="100" step="0.1" placeholder="0"></div><div><label>Durasi (menit)</label><input id="mins" type="number" min="0" max="1000" placeholder="0"></div></div>
+  <label>Elevasi naik / D+ (meter)</label><input id="elev" type="number" min="0" max="10000" placeholder="0">
+  <label>Catatan latihan</label><textarea id="notes" placeholder="Rute, kondisi cuaca, perasaan, dll."></textarea>
+  <button style="width:100%;margin-top:16px">Simpan latihan</button>
+ </form>
+</section>
+<section id="recovery" class="view">
+ <h2>Pemulihan</h2><p class="muted">Catat kondisi harian. Gunakan untuk mengenali pola, bukan mengejar skor.</p>
+ <form id="recoveryform">
+  <label>Tanggal</label><input id="rdate" type="date" required>
+  <div class="row"><div><label>Jam tidur</label><input id="sleep" type="number" min="0" max="24" step=".5" placeholder="mis. 8"></div><div><label>Kelelahan (1–5)</label><select id="fatigue"><option value="1">1 - Segar</option><option value="2">2 - Ringan</option><option value="3" selected>3 - Sedang</option><option value="4">4 - Lelah</option><option value="5">5 - Sangat lelah</option></select></div></div>
+  <label>Kondisi tubuh</label><select id="body"><option>Baik</option><option>Agak lelah</option><option>Nyeri / tidak nyaman</option><option>Kurang sehat</option></select>
+  <label>Catatan</label><textarea id="rnotes" placeholder="Kualitas tidur, suasana hati, keluhan, dll."></textarea>
+  <button style="width:100%;margin-top:16px">Simpan pemulihan</button>
+ </form>
+ <h3 class="section-title">Riwayat pemulihan</h3><div id="recoverylist" class="card"></div>
+</section>
+<section id="history" class="view">
+ <h2>Riwayat latihan</h2><div class="card"><div id="historylist" class="empty">Belum ada latihan tercatat.</div></div>
+ <button class="secondary" id="export" style="width:100%">Ekspor data (JSON)</button>
+ <p class="note">Data tersimpan di browser/perangkat ini. Ekspor salinan secara berkala agar tidak hilang saat data browser dihapus.</p>
+</section>
+</main>
+<nav class="tabs">
+ <button class="active" data-view="home">⌂<br>Beranda</button><button data-view="log">＋<br>Latihan</button><button data-view="recovery">♡<br>Pemulihan</button><button data-view="history">▤<br>Riwayat</button>
+</nav>
+<script>
+const $=id=>document.getElementById(id), today=new Date().toISOString().slice(0,10);
+$('date').value=today;$('rdate').value=today;
+const get=(k)=>JSON.parse(localStorage.getItem(k)||'[]');
+const put=(k,v)=>localStorage.setItem(k,JSON.stringify(v));
+document.querySelectorAll('.tabs button').forEach(b=>b.addEventListener('click',()=>{document.querySelectorAll('.tabs button').forEach(x=>x.classList.remove('active'));document.querySelectorAll('.view').forEach(x=>x.classList.remove('active'));b.classList.add('active');$(b.dataset.view).classList.add('active');render()}));
+$('runform').addEventListener('submit',e=>{e.preventDefault();let a=get('runs');a.unshift({date:$('date').value,kind:$('kind').value,km:Number($('km').value||0),mins:Number($('mins').value||0),elev:Number($('elev').value||0),notes:$('notes').value});put('runs',a);e.target.reset();$('date').value=today;alert('Latihan tersimpan di perangkat ini.');render()});
+$('recoveryform').addEventListener('submit',e=>{e.preventDefault();let a=get('recovery');a.unshift({date:$('rdate').value,sleep:Number($('sleep').value||0),fatigue:$('fatigue').value,body:$('body').value,notes:$('rnotes').value});put('recovery',a);e.target.reset();$('rdate').value=today;alert('Catatan pemulihan tersimpan.');render()});
+function render(){let runs=get('runs'), rec=get('recovery');$('s-sessions').textContent=runs.length;$('s-km').textContent=runs.reduce((s,x)=>s+x.km,0).toFixed(1)+' km';$('s-elev').textContent=runs.reduce((s,x)=>s+x.elev,0)+' m';let sleeps=rec.filter(x=>x.sleep>0);$('s-sleep').textContent=sleeps.length?(sleeps.reduce((s,x)=>s+x.sleep,0)/sleeps.length).toFixed(1)+' jam':'—';
+$('historylist').innerHTML=runs.length?runs.map(x=>`<div class="entry"><strong>${esc(x.kind)} · ${esc(x.date)}</strong><span class="tag">${x.km} km</span> <span class="tag">${x.mins} menit</span> <span class="tag">D+ ${x.elev} m</span>${x.notes?`<p class="note">${esc(x.notes)}</p>`:''}</div>`).join(''):'<div class="empty">Belum ada latihan tercatat.</div>';
+$('recoverylist').innerHTML=rec.length?rec.slice(0,12).map(x=>`<div class="entry"><strong>${esc(x.date)} · ${esc(x.body)}</strong><span class="tag">Tidur ${x.sleep} jam</span> <span class="tag">Lelah ${x.fatigue}/5</span>${x.notes?`<p class="note">${esc(x.notes)}</p>`:''}</div>`).join(''):'<div class="empty">Belum ada catatan pemulihan.</div>'}
+function esc(s){return String(s).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+$('export').addEventListener('click',()=>{let blob=new Blob([JSON.stringify({runs:get('runs'),recovery:get('recovery')},null,2)],{type:'application/json'}),url=URL.createObjectURL(blob),a=document.createElement('a');a.href=url;a.download='bdg100-training-backup.json';a.click();URL.revokeObjectURL(url)});
+render();
+if('serviceWorker' in navigator)window.addEventListener('load',()=>navigator.serviceWorker.register('./sw.js'));
+</script>
+</body></html>
